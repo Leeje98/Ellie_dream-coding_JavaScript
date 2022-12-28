@@ -59,22 +59,4 @@ userStorage
   .then(user => alert(`Hello ${user.name}, you have a ${user.role} role`))
   .catch(console.log)
 
-
-userStorage.loginUser(
-  id,
-  password,
-  (user) => {
-    userStorage.getRoles(
-      user,
-      userWithRole => {
-        alert(`Hello ${userWithRole.name}, you have a ${userWithRole.role} role`)
-      },
-      (error) => {
-        console.log(error)
-      }
-    );
-  },
-  (error) => {
-    console.log(error);
-  }
-);
+ 
