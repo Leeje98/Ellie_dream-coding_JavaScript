@@ -31,7 +31,7 @@ promise //
   })
   .catch(error => {    // catch : 프로미스가 정상적으로 동작이 되지않아서 실패했을때, 내가 정의한 error메세지가 호출된다
     console.log(error)
-  })
+  }) 
   .finally(() => {console.log('finally')})    // finally : 프로미스 성공여부와 관련없이 마지막에 무조건 호출된다
 
 
@@ -40,7 +40,7 @@ promise //
     setTimeout(() => resolve(1), 1000)
   })
 
-  fetchNumder
+  fetchNumder        
   .then(num => num * 2)  // 2
   .then(num => num * 3)  // 6
   .then(num => {
@@ -49,7 +49,7 @@ promise //
     })
   })
   .then(num => console.log(num))
-
+  // then 을 묶어서 쓸 수 있다
 
 
 // 4. Error Handling
@@ -59,5 +59,23 @@ const getHen = () =>
   })
 const getEgg = hen => 
   new Promise((resolve, reject) => {
-    setTimeout(() => resolve(`${hen} => 🥚`))
+    // setTimeout(() => resolve(`${hen} => 🥚`), 1000)
+    setTimeout(() => reject(new Error(`error! ${hen} => 🥚`)), 1000)
   })
+const cook = egg =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => resolve(`${egg} => 🍳`), 1000)
+  })
+
+getHen() // 
+// .then(hen => getEgg(hen))  // 아래처럼 생략가능
+.then(getEgg)      // 계란을 받아온다
+.catch(error => {  // 계란을 받아오는것에 문제가 생겼다면 - then바로 다음에 catch 넣어주기
+  return '🌽'     // 옥수수로 대체한다
+})
+// .then(egg => cook(egg))
+.then(cook)       // 받아온 재료로 요리한다
+// .then(meal => console.log(meal))
+.then(console.log)
+
+.catch(console.log)
